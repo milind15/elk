@@ -54,4 +54,4 @@ EXPOSE 5601
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["kibana"]
 
-HEALTHCHECK CMD ["docker-healthcheck"]
+#HEALTHCHECK CMD ["docker-healthcheck"]
