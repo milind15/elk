@@ -27,7 +27,7 @@ c. Instructions to set up on new linux machine:
 	$ apt-get remove docker docker-engine -y
 	$ apt-get install apt-transport-https ca-certificates curl gnupg2 software-properties-common python-setuptools -y
 	$ curl -fssl https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-	$ add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu ${lsb_release -cs} stable"
+	$ add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 	$ apt-get update
 	$ apt-get install docker-ce -y
 	$ systemctl enable docker
