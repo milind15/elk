@@ -86,7 +86,8 @@ f. Troubleshooting Guidelines:
 	run command : sysctl -w vm.max_map_count=262144
 	Make sure to allow http traffic on port 5601 & port 9200 to access kibana & Elasticsearch from your browser.
 
-     ***THE ELK STACK HAS BEEN DEPLOYED SUCCESSFULLY USING DOCKER COMPOSE***
+       
+  ***THE ELK STACK HAS BEEN DEPLOYED SUCCESSFULLY USING DOCKER COMPOSE***
 
 g.i. This architecture can be scaled horizontally by making a 3 node swarm cluster which will provide enhanced scaling & load balancing in large data scenarios since each node will be running a single service or there will be multiple containers of every service distributed among the swarm.
      In case of 100 TB of data , Vertical scaling can be done in the swarm by adding more physical resources such as memory, storage and CPU to the existing database server for improving the performance.It results in a robust system. 
@@ -112,7 +113,7 @@ g.i. This architecture can be scaled horizontally by making a 3 node swarm clust
 
      8) Understand normal application network behavior, and enact a security policy to enforce authorized connections. Monitor every  container for abnormal behavior or policy violations.
 
-     9) Perform live scans of all running containers and hosts, recognizing vulnerabilities and securing the image in use – even as new	containers are created.
+     9) Perform live scans of all running containers and hosts, recognizing vulnerabilities and securing the image in use – even as new containers are created.
 
      10) Use session level or network encryption where needed. Carefully weigh the tradeoffs between performance/manageability versus security for each application to determine if host-to-host or container-to-container level encryption is warranted.
 
