@@ -84,6 +84,9 @@ f. Troubleshooting Guidelines:
 	
     Inorder to run elasticsearch as a container.The vm.max_map_count kernel setting needs to be set to at least 262144.
     run command : sysctl -w vm.max_map_count=262144
+    re-run 
+    $ docker-compose up -d
+    You will see elastic container is also running now.
     Make sure to allow http traffic on port 5601 to access kibana & port 9200 to access Elasticsearch(JSON Response) from your browser.
 
        
