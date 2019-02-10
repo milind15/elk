@@ -72,28 +72,27 @@ d. Steps to run the project:
 
 e. Testing the deployment:
 	
-        * Open http://localhost:5601 in your browser & access kibana using some sample data. You will be able to see the dashboard with 	  the sample data represented graphically & analytically with the sample data.
-	* curl http://localhost:9200 , you will see a JSON response from elasticsearch.
-	* Healthchecks can be enabled in dockerfile for elasticsearch & kibana for monitoring container health on deployment.
-	* Use docker logs <container-name> to see the logs for the running containers
-	* For negative testing, remove the logstash container using docker container rm elk_logstash_1, run again
-	$ docker-compose up -d
-	You will see the existing 2 containers will not be modified but docker-compose creates the missing container logstash.
+    * Open http://localhost:5601 in your browser & access kibana using some sample data. You will be able to see the dashboard with the sample data represented by charts & graphs.
+    * curl http://localhost:9200 , you will see a JSON response from elasticsearch.
+    * Healthchecks can be enabled in dockerfile for elasticsearch & kibana for monitoring container health on deployment.
+    * Use docker logs <container-name> to see the logs for the running containers
+    * For negative testing, remove the logstash container using docker container rm elk_logstash_1, run again
+    $ docker-compose up -d
+    You will see the existing 2 containers will not be modified but docker-compose creates the missing container logstash.
 
 f. Troubleshooting Guidelines:
 	
-        Inorder to run elasticsearch as a container.The vm.max_map_count kernel setting needs to be set to at least 262144 for         		production use.
-	run command : sysctl -w vm.max_map_count=262144
-	Make sure to allow http traffic on port 5601 & port 9200 to access kibana & Elasticsearch from your browser.
+    Inorder to run elasticsearch as a container.The vm.max_map_count kernel setting needs to be set to at least 262144 for production use.
+    run command : sysctl -w vm.max_map_count=262144
+    Make sure to allow http traffic on port 5601 & port 9200 to access kibana & Elasticsearch from your browser.
 
        
   ***THE ELK STACK HAS BEEN DEPLOYED SUCCESSFULLY USING DOCKER COMPOSE***
 
-g.i. This architecture can be scaled horizontally by making a 3 node swarm cluster which will provide enhanced scaling & load balancing in large data scenarios since each node will be running a single service or there will be multiple containers of every service distributed among the swarm.
-     In case of 100 TB of data , Vertical scaling can be done in the swarm by adding more physical resources such as memory, storage and CPU to the existing database server for improving the performance.It results in a robust system. 
- ii. In case of a dashboard vs an application that consumes this data for data mining the scaling process will remain same.
- iii.Such cluster can be managed by making a manager node among 3 nodes available.The docker swarm manager node uses the "Raft Consensus Algorithm" to manage the swarm state.In case of a big cluster there can be multiple swarm managers managing respective worker nodes.
- iv. For managing container runtime security :
+    1) This architecture can be scaled horizontally by making a 3 node swarm cluster which will provide enhanced scaling & load balancing in large data scenarios since each node will be running a single service or there will be multiple containers of every service distributed among the swarm.In case of 100 TB of data, Vertical scaling can be done in the swarm by adding more physical resources such as memory, storage and CPU to the existing database server for improving the performance.It results in a robust system. 
+    2) In case of a dashboard vs an application that consumes this data for data mining the scaling process will remain same.
+    3) Such cluster can be managed by making a manager node among 3 nodes available.The docker swarm manager node uses the "Raft Consensus Algorithm" to manage the swarm state.In case of a big cluster there can be multiple swarm managers managing respective worker nodes.
+    4) For managing container runtime security :
      
      1) Secure the OS and reduce attack surfaces by removing all unneeded modules and files. Be diligent in updating to the latest security patches.
 
