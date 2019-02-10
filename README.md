@@ -84,7 +84,7 @@ f. Troubleshooting Guidelines:
 	
     Inorder to run elasticsearch as a container.The vm.max_map_count kernel setting needs to be set to at least 262144.
     run command : sysctl -w vm.max_map_count=262144
-    Make sure to allow http traffic on port 5601 & port 9200 to access kibana & Elasticsearch from your browser.
+    Make sure to allow http traffic on port 5601 & port 9200 to access kibana & Elasticsearch(JSON Response) from your browser.
 
        
   ***THE ELK STACK HAS BEEN DEPLOYED SUCCESSFULLY USING DOCKER COMPOSE***
