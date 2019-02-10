@@ -12,7 +12,7 @@ a. Tools & Technology Used:
 
 b.1 Assumptions:
 	
-         1) Root access or sudo to root access on server which is being used for deployment
+         1) Root access or sudo access on server which is being used for deployment.
 	 2) Access to internet on the server
 
 b.2 Prerequisites:
