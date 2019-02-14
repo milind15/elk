@@ -2,58 +2,104 @@ version: '3'
 
 services:
 
-  elastic:
+  #############################
+  # ELASTICSEARCH MASTER NODE #
+  #############################
+  master:
+    restart: unless-stopped
     image: elasticsearch
-    volumes:
-      - ./elasticsearch/config/elastic/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+    environment:
+      - cluster.name=docker-cluster
+      - node.master=true
+      - node.ingest=false
+      - node.data=false
     ports:
       - "9200:9200"
-      - "9300:9300"
-    environment:
-      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+    volumes:
+      - data:/usr/share/elasticsearch/data
     networks:
-      - elk
-
+      - elastic
+  ####################################
+  # ELASTICSEARCH COORDINATING NODE #
+  ####################################
+  ingest:
+    restart: unless-stopped
+    image: elasticsearch
+    environment:
+      - cluster.name=docker-cluster
+      - node.master=false
+      - node.ingest=false
+      - node.data=false
+      - discovery.zen.ping.unicast.hosts=master
+    links:
+     - master:elastic-master
+    networks:
+      - elastic
+  ####################################
+  # ELASTICSEARCH DATA+MASTER NODE #
+  ####################################
+  ingest:
+    restart: unless-stopped
+    image: elasticsearch
+    environment:
+      - cluster.name=docker-cluster
+      - node.master=true
+      - node.ingest=false
+      - node.data=true
+      - discovery.zen.ping.unicast.hosts=master
+    ports:
+      - "9200:9200"
+    links:
+     - master:elastic-master
+    networks:
+      - elastic   
+    depends_on:
+      - master  
+  ####################################
+  # ELASTICSEARCH KIBANA NODE        #
+  ####################################
   kibana:
     image: kibana
     links:
-      - "elastic:elasticsearch"  
+      - "master:elasticsearch"  
     ports:
       - "5601:5601"
     networks:
-      - elk
-    depends_on:
       - elastic
-    
-  logstash:
-    image: logstash
-    links:
-      - "elastic:elasticsearch"      
-    volumes:
-      - ./logstash/config:/config-dir
-    ports:
-      - "5044:5044"
-    environment:
-      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
-    networks:
-      - elk
-    command: logstash -e 'input { 
-                  beats { 
-                    port => 5044 
-                  } 
-               } 
-                 output {
-                 elasticsearch { 
-                   hosts => "elastic:9200" 
-                   manage_template => false 
-                   index => "%{[@metadata][beat]}-%{+YYYY.MM.dd}" 
-                   document_type => "%{[@metadata][type]}" 
-                 } 
-               }'
     depends_on:
-      - elastic 
+      - master
+    
+  #logstash:
+   # image: logstash
+    #links:
+     # - "elastic:elasticsearch"      
+    #volumes:
+     # - ./logstash/config:/config-dir
+    #ports:
+     # - "5044:5044"
+   # environment:
+    #  LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+   # networks:
+    #  - elk
+   # command: logstash -e 'input { 
+    #              beats { 
+     #               port => 5044 
+      #            } 
+       #        } 
+      #           output {
+       #          elasticsearch { 
+        #           hosts => "elastic:9200" 
+         #          manage_template => false 
+         #          index => "%{[@metadata][beat]}-%{+YYYY.MM.dd}" 
+          #         document_type => "%{[@metadata][type]}" 
+           #      } 
+         #      }'
+    #depends_on:
+     # - elastic 
 
+################################
+# ELASTICSEARCH BRIDGE NETWORK #
+################################
 networks:
-
-  elk:
-    driver: bridge
+  elastic:
+    driver: overlay
