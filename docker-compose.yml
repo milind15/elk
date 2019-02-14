@@ -15,8 +15,6 @@ services:
       - node.data=false
     ports:
       - "9200:9200"
-    volumes:
-      - data:/usr/share/elasticsearch/data
     networks:
       - elastic
   ####################################
