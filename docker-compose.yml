@@ -66,35 +66,7 @@ services:
       - elastic
     depends_on:
       - master
-    
-  #logstash:
-   # image: logstash
-    #links:
-     # - "elastic:elasticsearch"      
-    #volumes:
-     # - ./logstash/config:/config-dir
-    #ports:
-     # - "5044:5044"
-   # environment:
-    #  LS_JAVA_OPTS: "-Xmx256m -Xms256m"
-   # networks:
-    #  - elk
-   # command: logstash -e 'input { 
-    #              beats { 
-     #               port => 5044 
-      #            } 
-       #        } 
-      #           output {
-       #          elasticsearch { 
-        #           hosts => "elastic:9200" 
-         #          manage_template => false 
-         #          index => "%{[@metadata][beat]}-%{+YYYY.MM.dd}" 
-          #         document_type => "%{[@metadata][type]}" 
-           #      } 
-         #      }'
-    #depends_on:
-     # - elastic 
-
+ 
 ################################
 # ELASTICSEARCH BRIDGE NETWORK #
 ################################
