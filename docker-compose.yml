@@ -17,9 +17,9 @@ services:
       - "9200:9200"
     networks:
       - elastic
-  ####################################
+  ###################################
   # ELASTICSEARCH COORDINATING NODE #
-  ####################################
+  ###################################
   ingest:
     restart: unless-stopped
     image: elasticsearch
@@ -33,9 +33,9 @@ services:
      - master:elastic-master
     networks:
       - elastic
-  ####################################
+  ###################################
   # ELASTICSEARCH DATA+MASTER NODE #
-  ####################################
+  ###################################
   ingest:
     restart: unless-stopped
     image: elasticsearch
