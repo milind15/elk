@@ -1,0 +1,59 @@
+version: '3'
+
+services:
+
+  elastic:
+    image: elasticsearch
+    volumes:
+      - ./elasticsearch/config/elastic/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+    networks:
+      - elk
+
+  kibana:
+    image: kibana
+    links:
+      - "elastic:elasticsearch"  
+    ports:
+      - "5601:5601"
+    networks:
+      - elk
+    depends_on:
+      - elastic
+    
+  logstash:
+    image: logstash
+    links:
+      - "elastic:elasticsearch"      
+    volumes:
+      - ./logstash/config:/config-dir
+    ports:
+      - "5044:5044"
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+    networks:
+      - elk
+    command: logstash -e 'input { 
+                  beats { 
+                    port => 5044 
+                  } 
+               } 
+                 output {
+                 elasticsearch { 
+                   hosts => "elasticsearch:9200" 
+                   manage_template => false 
+                   index => "%{[@metadata][beat]}-%{+YYYY.MM.dd}" 
+                   document_type => "%{[@metadata][type]}" 
+                 } 
+               }'
+    depends_on:
+      - elastic 
+
+networks:
+
+  elk:
+    driver: bridge
