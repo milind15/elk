@@ -2,8 +2,8 @@ version: '3'
 
 services:
 
-  #############################
-  # ELASTICSEARCH MASTER NODE #
+  ############################
+  # ELASTICSEARCH MASTER NODE 
   #############################
   master:
     restart: unless-stopped
