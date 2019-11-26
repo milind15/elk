@@ -1,4 +1,4 @@
-## CONTAINERIZED DEPLOYMENT OF ELK STACK
+### CONTAINERIZED DEPLOYMENT OF ELK STACK
 What is ELK?
 
 "ELK" is the acronym for three open source projects: ELASTICSEARCH, LOGSTASH and KIBANA. Elasticsearch is a search and analytics engine. Logstash is a server-side data processing pipeline that ingests data from multiple sources simultaneously, transforms it, and then sends it to a "stash" like Elasticsearch. Kibana lets users visualize data with charts and graphs in Elasticsearch.
